@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLLOCATION">
+            <Component Id="cmp93645FCD1A13835D0DFCD156CF2C6C64" Guid="*">
+                <File Id="fil00A150C9AD477E1EE4E8CA4503876DA9" KeyPath="yes" Source="SourceDir\Global.asax" />
+            </Component>
+            <Component Id="cmpFED9CE4C040C6D017106CB6B92C2F157" Guid="*">
+                <File Id="fil43F031812C2D8647225696DDDF358FCA" KeyPath="yes" Source="SourceDir\packages.config" />
+            </Component>
+            <Component Id="cmpFB33635B7D7AF5906B5DFB25D7E4F343" Guid="*">
+                <File Id="fil0AB648957C4B57849C7F7229ADDD83F2" KeyPath="yes" Source="SourceDir\Web.config" />
+            </Component>
+            <Directory Id="dirBD8892FBCC64DA5924D7F747259B8B87" Name="bin">
+                <Component Id="cmpF1F0200369C5484B0FB6D95EED703FAA" Guid="*">
+                    <File Id="filBA29BA59B6A035E204F1E7D008C5203D" KeyPath="yes" Source="SourceDir\bin\ApiTester.dll" />
+                </Component>
+                <Component Id="cmp7BFEE3A7DFA2C99E4B90A722898BAA19" Guid="*">
+                    <File Id="filDFB887CA6E047C02845E1177FFCB4D00" KeyPath="yes" Source="SourceDir\bin\ApiTester.pdb" />
+                </Component>
+                <Component Id="cmp6D91BDA209F00F265B7756AA0AAE9D50" Guid="*">
+                    <File Id="fil3F9FAF04876304C0DF665CCFFA27E399" KeyPath="yes" Source="SourceDir\bin\AttributeRouting.dll" />
+                </Component>
+                <Component Id="cmp75ED74CA6295EC9F981EAAC4C4DC4A02" Guid="*">
+                    <File Id="filC713F560525A64F1EA6CE9875F055A73" KeyPath="yes" Source="SourceDir\bin\AttributeRouting.Web.dll" />
+                </Component>
+                <Component Id="cmpCF66F2FFA428EFD2F0D17DE390AC9DF2" Guid="*">
+                    <File Id="fil00AF7D093D1A26A83AEEC33E475A2506" KeyPath="yes" Source="SourceDir\bin\AttributeRouting.Web.Http.dll" />
+                </Component>
+                <Component Id="cmp4A0F72F0D7AF01EB64159208855CF17F" Guid="*">
+                    <File Id="filD573AEA2D7DB930BE2DA69EBE842254B" KeyPath="yes" Source="SourceDir\bin\AttributeRouting.Web.Http.WebHost.dll" />
+                </Component>
+                <Component Id="cmp96EB4FD032767068C55287B5AF95AFAE" Guid="*">
+                    <File Id="fil66D8B8E3D41B8C4DBA1A8C9299EECB55" KeyPath="yes" Source="SourceDir\bin\BouncyCastle.CryptoExt.dll" />
+                </Component>
+                <Component Id="cmp48B5CE506D86BF39F5848F1D62F6CFAE" Guid="*">
+                    <File Id="fil4A13ABF803EECCA5885EFAE4997322B4" KeyPath="yes" Source="SourceDir\bin\Microsoft.Web.Infrastructure.dll" />
+                </Component>
+                <Component Id="cmpCBBD857B6884D163CDBADD7367F6EAB5" Guid="*">
+                    <File Id="filB93E309871BBBB64382DAED7AC48DF75" KeyPath="yes" Source="SourceDir\bin\Newtonsoft.Json.dll" />
+                </Component>
+                <Component Id="cmp0A67792E952B952DDB076BD31E46EC1B" Guid="*">
+                    <File Id="filCB0E508603EAF583BE1C13A457A359FF" KeyPath="yes" Source="SourceDir\bin\System.Net.Http.dll" />
+                </Component>
+                <Component Id="cmpAEE8C660E33BAAABE81574A21E56902D" Guid="*">
+                    <File Id="fil26D8240C90B630D3E0F9672369D834D4" KeyPath="yes" Source="SourceDir\bin\System.Net.Http.Formatting.dll" />
+                </Component>
+                <Component Id="cmp8713A90565844F2D3DD2BA742EC7F224" Guid="*">
+                    <File Id="fil682E29E9D61462AAC41B8BC98AAC1C4C" KeyPath="yes" Source="SourceDir\bin\System.Net.Http.WebRequest.dll" />
+                </Component>
+                <Component Id="cmpED5EC8354CBBA4A5DBCE03D1F2F2071C" Guid="*">
+                    <File Id="filF3E108A0062C8A384468009E45CF8041" KeyPath="yes" Source="SourceDir\bin\System.Web.Http.dll" />
+                </Component>
+                <Component Id="cmp245E227013AFB700474EE5AB93049109" Guid="*">
+                    <File Id="fil12D873BD0D3347A94972D161E38006D5" KeyPath="yes" Source="SourceDir\bin\System.Web.Http.WebHost.dll" />
+                </Component>
+                <Component Id="cmp3C393FF0876FE731C3DE85685FA9411B" Guid="*">
+                    <File Id="fil5770B0DED03B918BA4DBD93B51925081" KeyPath="yes" Source="SourceDir\bin\WebActivator.dll" />
+                </Component>
+                <Component Id="cmpCA71A2350EBE78605B029B239DED2EBA" Guid="*">
+                    <File Id="filD0B05CF346C3D2DB8B30D4E1339083DD" KeyPath="yes" Source="SourceDir\bin\WebActivator.pdb" />
+                </Component>
+            </Directory>
+            <Directory Id="dirDB682B6153BD5D4BCAB78F336C5994F0" Name="Views">
+                <Component Id="cmp59C1AF38179F0401D56B6149279A915F" Guid="*">
+                    <File Id="fil3A514B317E9B870565A32DE0AD139B76" KeyPath="yes" Source="SourceDir\Views\Web.config" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="ApiTester_Project">
+            <ComponentRef Id="cmp93645FCD1A13835D0DFCD156CF2C6C64" />
+            <ComponentRef Id="cmpFED9CE4C040C6D017106CB6B92C2F157" />
+            <ComponentRef Id="cmpFB33635B7D7AF5906B5DFB25D7E4F343" />
+            <ComponentRef Id="cmpF1F0200369C5484B0FB6D95EED703FAA" />
+            <ComponentRef Id="cmp7BFEE3A7DFA2C99E4B90A722898BAA19" />
+            <ComponentRef Id="cmp6D91BDA209F00F265B7756AA0AAE9D50" />
+            <ComponentRef Id="cmp75ED74CA6295EC9F981EAAC4C4DC4A02" />
+            <ComponentRef Id="cmpCF66F2FFA428EFD2F0D17DE390AC9DF2" />
+            <ComponentRef Id="cmp4A0F72F0D7AF01EB64159208855CF17F" />
+            <ComponentRef Id="cmp96EB4FD032767068C55287B5AF95AFAE" />
+            <ComponentRef Id="cmp48B5CE506D86BF39F5848F1D62F6CFAE" />
+            <ComponentRef Id="cmpCBBD857B6884D163CDBADD7367F6EAB5" />
+            <ComponentRef Id="cmp0A67792E952B952DDB076BD31E46EC1B" />
+            <ComponentRef Id="cmpAEE8C660E33BAAABE81574A21E56902D" />
+            <ComponentRef Id="cmp8713A90565844F2D3DD2BA742EC7F224" />
+            <ComponentRef Id="cmpED5EC8354CBBA4A5DBCE03D1F2F2071C" />
+            <ComponentRef Id="cmp245E227013AFB700474EE5AB93049109" />
+            <ComponentRef Id="cmp3C393FF0876FE731C3DE85685FA9411B" />
+            <ComponentRef Id="cmpCA71A2350EBE78605B029B239DED2EBA" />
+            <ComponentRef Id="cmp59C1AF38179F0401D56B6149279A915F" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

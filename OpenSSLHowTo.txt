@@ -1,0 +1,37 @@
+**** Convert .cer to .pem
+openssl x509 -inform pem -in certificate.cer -outform der -out certificate.pem
+
+**** Derive public key from private key
+openssl ec -in "C:\OfficeDocs\Wink\merchant.com.ippayments.winkwink.ecc.key" -pubout > pubkey.pub
+
+**** Derive public key from PEM
+openssl x509 -pubkey -noout -in apple.pem  > pubkey.pem
+
+**** Extract public key from certificate in DER format
+openssl x509 -in certificate.cer -pubkey -noout | openssl enc -base64 -d > publickey.der
+
+**** Generate new ECC Key pair and then use the public key to generate a CSR
+openssl ecparam -out ippwink.ecc.pkey -name prime256v1 -genkey && openssl req -new -key ippwink.ecc.pkey -sha256 -nodes -out IPPWINK.ecc.csr -subj "/C=AU/ST=NSW /L=Sydney/O=IP Payments/CN=www.ippayments.com"
+
+Permissions to give to appPool to read certificate private key
+http://geekswithblogs.net/SoftwareDoneRight/archive/2011/03/15/how-to-set-x509-certificate-private-key-access-rights-for.aspx
+
+Understand completely
+http://security.stackexchange.com/questions/29425/difference-between-pfx-and-cert-certificates
+
+The two below describe extracting public and private keys from PFX
+http://stackoverflow.com/questions/403174/convert-pfx-to-cer
+https://support.software.dell.com/sonicwall-email-security/kb/sw10754
+
+================ NICE TO KNOW below this =================
+Apple Pay Overview
+http://blog.spreedly.com/2014/11/24/spreedlys-take-on-apple-pay/#.VZyr9PmqqHg
+
+How 3D Secure works with Apple Pay
+http://pomcor.com/2014/11/09/how-apple-pay-uses-3-d-secure-for-internet-payments/
+
+Read Later
+https://vcsjones.com/2013/12/12/working-with-cng-keys/
+
+BASE 64 Explained
+https://blogs.oracle.com/rammenon/entry/base64_explained

@@ -1,0 +1,1 @@
+heat dir "C:\Projects\ApiTester\ApiTester\bin" -dr bin -cg BINARIES -gg -g1 -sf -srd -var "var.ApiTester.TargetDir" -out C:\Users\sudhanshu.mishra\Desktop\HeatFile.wxs

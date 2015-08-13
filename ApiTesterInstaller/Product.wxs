@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+  <Product
+    Id="F6E5846D-686A-49B5-B239-CF341513AE7C"
+    Name="ApiTester"
+    Language="1033"
+    Version="1.0.0.0"
+    Manufacturer="IP Payments"
+    UpgradeCode="0197A4C0-7968-495D-87C4-7E8B7E9E6743">
+    <Package
+      InstallerVersion="301"
+      Compressed="yes"
+      InstallScope="perMachine"
+      Manufacturer="IP Payments"
+      Comments="(c) IP Payments"/>
+    <MediaTemplate EmbedCab="yes" />
+    <!--SO: http://stackoverflow.com/a/597060/190476 -->
+    <UI Id="WixUI_Minimal">
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WixUI_Mode" Value="Minimal" />
+
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+
+      <!-- This is the welcome dialog you specified-->
+      <DialogRef Id="WelcomeDlg" />
+
+      <!-- Hook the new welcome dialog to the next one in the stack-->
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="PrepareDlg">1</Publish>
+
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+
+      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+
+      <Property Id="ARPNOMODIFY" Value="1" />
+    </UI>
+
+    <UIRef Id="WixUI_Common" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="ApiTester">
+          <Directory Id="BINFOLDER" Name="bin" />
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="MainProduct" Title="Main Product" Level="1">
+      <ComponentGroupRef Id="BINARIES"/>
+      <ComponentGroupRef Id="WEBROOTFILES"/>
+      <ComponentGroupRef Id="IISINSTALL"/>
+    </Feature>
+  </Product>
+  
+  <!--The files that sit at the root of the web application, e.g. Web.config-->
+  <Fragment>
+    <ComponentGroup Id="WEBROOTFILES" Directory="INSTALLFOLDER">
+      <Component Id="CMP_WebConfig" Guid="13A0BCC0-1A6A-49F8-B9D4-E85FBCBE1582">
+        <File Id="FILE_INSTALLFOLDER_WebConfig" Source="$(var.SolutionDir)ApiTester\web.config" />
+      </Component>
+      <Component Id="CMP_GlobalAsax" Guid="2070733E-FE52-41AE-8FE4-3A37C375479F">
+        <File Id="FILE_INSTALLFOLDER_GlobalAsax" Source="$(var.SolutionDir)ApiTester\Global.asax" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  
+  <!--The files that go in the bin directory-->
+  <Fragment>
+    <ComponentGroup Id="BINARIES">
+      <Component Id="cmpC38571892CB043358FE002E5ADF022B7" Directory="BINFOLDER" Guid="9143CC4F-AD85-496B-8E9A-10BA6AFC2A50">
+        <File Id="fil1F9D35BA49221089A11C84B0CA7A006B" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\ApiTester.dll" />
+      </Component>
+      <Component Id="cmpAD33FA9164DE8F74F598AB6C90C80224" Directory="BINFOLDER" Guid="31AA2C1E-CFC5-4F43-A9C3-7A9CEA5E218F">
+        <File Id="filF5B9546359825ADADA9011119AA43B84" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\ApiTester.dll.config" />
+      </Component>
+      <Component Id="cmp084294565466D7A74415EB52A22290A6" Directory="BINFOLDER" Guid="CA39DB05-3216-491C-BAE4-54865F51638A">
+        <File Id="fil71E07AACB5391E01E922FE5117E6BA83" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\ApiTester.pdb" />
+      </Component>
+      <Component Id="cmpA8C083A4D2C4F765626FF895978E7700" Directory="BINFOLDER" Guid="4D3BAE3D-80EA-47C1-B89F-968F820DE077">
+        <File Id="fil32A929B2D7636C86BC1D4F436043E9E1" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\AttributeRouting.dll" />
+      </Component>
+      <Component Id="cmp564AC4B7561EB1E66B2F170060A76558" Directory="BINFOLDER" Guid="B0C07B6F-5958-4DD3-9566-151A41C7C26E">
+        <File Id="fil1BEBEFFCE672A21F4BE958437EA04E11" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\AttributeRouting.Web.dll" />
+      </Component>
+      <Component Id="cmpA0245D2D01226AE6EF696CB5AFC5D9C9" Directory="BINFOLDER" Guid="8F10C411-0707-4AAE-B23E-02C8905969B9">
+        <File Id="fil88B8125A4630C384CC9210CBE46299FC" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\AttributeRouting.Web.Http.dll" />
+      </Component>
+      <Component Id="cmp1BABB5E3E5378596BC694C1187D003BC" Directory="BINFOLDER" Guid="CD1F2F6A-7BC3-415B-9C6B-E11E761A9B01">
+        <File Id="fil153F90100F2AD5FB424BB6E20238172A" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\AttributeRouting.Web.Http.WebHost.dll" />
+      </Component>
+      <Component Id="cmp22E149E7E6862B03C09452170901B4AF" Directory="BINFOLDER" Guid="804F9598-A77C-4B97-A6E7-DAB1954583B8">
+        <File Id="fil70D1F36650167DC3ABE7469840044E82" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\AttributeRouting.Web.Http.WebHost.xml" />
+      </Component>
+      <Component Id="cmp44C9FE779C6E38832B750361DE8F7545" Directory="BINFOLDER" Guid="B685DD87-AED0-424A-99E9-7213293FE0EB">
+        <File Id="fil722CBA0EEAC8249E08117A1A43B7ADD4" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\AttributeRouting.Web.Http.xml" />
+      </Component>
+      <Component Id="cmp3C9441B52450390A6FFCD516011E6C79" Directory="BINFOLDER" Guid="43A17F1F-B47A-46CB-B2FD-D0E0A38C5F03">
+        <File Id="fil76AA29D8F40040F4469704F780F38E5F" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\AttributeRouting.Web.xml" />
+      </Component>
+      <Component Id="cmp8514BD250FBFB81B3450BBC111A05112" Directory="BINFOLDER" Guid="74B02C99-655D-4E35-B92E-515FA6D5821A">
+        <File Id="fil1D4D78C4A9C09850F7514326CD5CC8FE" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\AttributeRouting.xml" />
+      </Component>
+      <Component Id="cmpC3377A8640B1EA2E8A4F347F074B5C50" Directory="BINFOLDER" Guid="16FFD6FE-947C-4DC3-B3EB-CF66011CC5B2">
+        <File Id="fil833235DEAEBA916A6346B77235F67139" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\BouncyCastle.CryptoExt.dll" />
+      </Component>
+      <Component Id="cmp7C8790E68742820D0701C4381F8F7E13" Directory="BINFOLDER" Guid="AD5EAB92-ED08-4F9D-AE40-9269822B4CB9">
+        <File Id="fil4226D5B19722436FBB2CD5439BC25947" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\Microsoft.Web.Infrastructure.dll" />
+      </Component>
+      <Component Id="cmp5E3A5567A33CDC3D625682918DBD558A" Directory="BINFOLDER" Guid="B7BC9A17-A9B1-4AF3-96F1-B57A42FC274D">
+        <File Id="fil84BA27186A6B05165A99599E2BE258CC" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\Microsoft.Web.Mvc.FixedDisplayModes.dll" />
+      </Component>
+      <Component Id="cmp192986824CEB8C4F3D719780A7DBF3C2" Directory="BINFOLDER" Guid="6AE478B9-4DCB-4D5E-BD2F-D8DFDCB216EE">
+        <File Id="fil48A6E127A3C2724D32B012CA387B98C7" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="cmp1DEE5AF6111A7241C2803A1739748648" Directory="BINFOLDER" Guid="AA41AD15-87E7-41C9-8ACB-9602C7DD13F0">
+        <File Id="fil26EB74A1D422AFF0F8F08844BC296B8D" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\Newtonsoft.Json.xml" />
+      </Component>
+      <Component Id="cmp7426DE37B98B1887EC45C74B481D52C3" Directory="BINFOLDER" Guid="0C880D10-4D43-4183-82EF-5B9E9291A20F">
+        <File Id="fil7026DCCF4A742245958A288114FB9EF6" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Net.Http.dll" />
+      </Component>
+      <Component Id="cmpA5AFA33C2A96C69A5C948357868A3B81" Directory="BINFOLDER" Guid="6438A175-E5CE-460F-B617-1346C7733E7F">
+        <File Id="fil3C63C905EDAB230CEA2B8964E6936F0A" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Net.Http.Formatting.dll" />
+      </Component>
+      <Component Id="cmpC8F770A28E96ED23C7917F7D9282B789" Directory="BINFOLDER" Guid="5BA66993-1D9B-4AE3-858B-C80C3B34D049">
+        <File Id="fil53D21A381E403D8B98F5B7944E61763D" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Net.Http.Formatting.xml" />
+      </Component>
+      <Component Id="cmpF9D8B059E5EE99F47BFD2A684FC747DC" Directory="BINFOLDER" Guid="76C075FB-5A59-44D2-B629-AD712E38AED4">
+        <File Id="filD71E6BBC2978B724F58330C45A213472" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Net.Http.WebRequest.dll" />
+      </Component>
+      <Component Id="cmp4DCEBAD4BC2F97B119C4A03E30211463" Directory="BINFOLDER" Guid="206059B1-AB37-4D40-9705-94A2BE47B6B5">
+        <File Id="fil1DAD482F3BD34EF083C08381188666A3" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Net.Http.WebRequest.xml" />
+      </Component>
+      <Component Id="cmpCEBAD8D4D35766EE9F8510DB2C93EC44" Directory="BINFOLDER" Guid="BCAA1EAE-7A01-47ED-9DDF-6B6A0E8ACFEE">
+        <File Id="fil554261BAC102B942F83A4608BC61842B" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Net.Http.xml" />
+      </Component>
+      <Component Id="cmp9A0970B50D5F603AEFFADDA527D38B1F" Directory="BINFOLDER" Guid="04ECC557-02E8-40B5-B645-7523EFC52237">
+        <File Id="filBD07214EC41B2E434FA4416BA7A8F152" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Web.Helpers.dll" />
+      </Component>
+      <Component Id="cmpC77E15EF1D361486221FD6BDF5F995E7" Directory="BINFOLDER" Guid="74A96D7A-980C-402D-85BE-F9C6F64E8AC0">
+        <File Id="fil761217C7C7E9D99D3DE06218FFFE3180" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Web.Http.dll" />
+      </Component>
+      <Component Id="cmp9C5D0E97CF694D540178D92EBD8CF469" Directory="BINFOLDER" Guid="303A7877-F26F-4766-8783-12A181BD1A40">
+        <File Id="fil8BA9402A579525A3AF3476BC0C0170AF" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Web.Http.WebHost.dll" />
+      </Component>
+      <Component Id="cmp4BE670714B95982EF5181F35A118BFB5" Directory="BINFOLDER" Guid="AB86D1DB-B9D0-43C9-A085-DE9BB662D55F">
+        <File Id="fil8264D835751C40FC3209B4FA8872E7C5" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Web.Http.WebHost.xml" />
+      </Component>
+      <Component Id="cmp92C69A48E161E9E1A6C07295CB81F305" Directory="BINFOLDER" Guid="253EC6FF-0529-41E4-8701-2BFA5B6FA439">
+        <File Id="filFCD0A489E64B1A07DA84F76CD5C1A621" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Web.Http.xml" />
+      </Component>
+      <Component Id="cmp43D9B4E7A5609BF6DDFC582C0573F874" Directory="BINFOLDER" Guid="8624335F-8046-4D85-BB13-20003516CA23">
+        <File Id="filF8C37D032A4CD2430F936DF71542EA3C" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Web.Mvc.dll" />
+      </Component>
+      <Component Id="cmpB4E6763396946CC071C5D572547A5AFD" Directory="BINFOLDER" Guid="F7BBACB0-6D27-4E7F-8BBF-D6522B3778DE">
+        <File Id="fil365EF96D56A4DB8D68AE6871B0B07580" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Web.Razor.dll" />
+      </Component>
+      <Component Id="cmp1C7851E3700167312EC3291FFE02D87F" Directory="BINFOLDER" Guid="D50D78CB-6426-4F50-81D2-15D56A283765">
+        <File Id="fil4A6E9F1F9C8EE5196F35CBB5A7595A89" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Web.WebPages.Deployment.dll" />
+      </Component>
+      <Component Id="cmp7A5DFE2FBA5DBFD3B891CFC97073FF45" Directory="BINFOLDER" Guid="B9FB6B4A-0B71-4AD6-94B2-BC4EFA8E18E4">
+        <File Id="filD04FB73DE8467C4224CA68DBDDBDD55D" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Web.WebPages.dll" />
+      </Component>
+      <Component Id="cmpC9DDA2B16680EA5DB9FC36BE95C3902E" Directory="BINFOLDER" Guid="AE9A9409-0D1E-40D1-BDC5-834BBF347961">
+        <File Id="fil274CD30ECE0C8396719D834F233C5309" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\System.Web.WebPages.Razor.dll" />
+      </Component>
+      <Component Id="cmp9B347E6257E12679DCC3DE608E03326C" Directory="BINFOLDER" Guid="3D2F96B9-0A0B-4A07-ABC9-461F9E2BD95C">
+        <File Id="fil7A60B80A62567A3C1969FA4614E02663" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\WebActivator.dll" />
+      </Component>
+      <Component Id="cmp0698B1724AA75CB96A231BB47B3F93A4" Directory="BINFOLDER" Guid="61320D72-1412-4FB7-A7A2-3D5F7CB58ACA">
+        <File Id="fil8E318453E20F9EF4BC235E64DF47DAB9" KeyPath="yes" Source="$(var.ApiTester.TargetDir)\WebActivator.pdb" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  
+  <!--IMPORTANT: DO NOT PLACE THE iis:WebSite inside a component, the uninstall will remove the website!!!-->
+  <Fragment>
+    <iis:WebSite Id="DEFAULTWEBSITE" Description="Default Web Site" >
+      <iis:WebAddress Id="AllUnassigned" Port="80" />
+    </iis:WebSite>
+    <ComponentGroup Id="IISINSTALL" Directory="INSTALLFOLDER">
+      <Component Id="WebVirtualDirComponent" Guid="574A220D-4BA6-4440-8387-F3AC0DE0D218" KeyPath="yes">
+        <iis:WebAppPool
+          Id="TestAppPool"
+          Name="TestAppPool"
+          ManagedRuntimeVersion="v4.0"
+          IdleTimeout="0"
+          RecycleMinutes="0"
+          ManagedPipelineMode="integrated"/>
+      </Component>
+      <Component Id="InstallWebApp" Guid="F4AFF302-DE4F-468F-904A-6A43E194A3C0" KeyPath="yes" >
+        <iis:WebVirtualDir Id="ApiTesterDir" Directory="INSTALLFOLDER" Alias="apitester" WebSite="DEFAULTWEBSITE" >
+          <iis:WebApplication Id="DemoWebsiteApplication" Name="[DEFAULTWEBSITE][WEBSITE_ID]" WebAppPool="TestAppPool"></iis:WebApplication>
+        </iis:WebVirtualDir>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
