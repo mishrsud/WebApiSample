@@ -9,6 +9,8 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "ApiTesterInstaller", "ApiTe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{E31B05A0-7981-4775-8D69-D43166FF96AB}"
 	ProjectSection(SolutionItems) = preProject
+		OpenSSLHowTo.txt = OpenSSLHowTo.txt
+		README-SettingUpTheAPI.txt = README-SettingUpTheAPI.txt
 		WiXCommands.txt = WiXCommands.txt
 	EndProjectSection
 EndProject
